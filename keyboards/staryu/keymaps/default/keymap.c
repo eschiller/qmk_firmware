@@ -1,16 +1,13 @@
 /*
 Copyright 2018 Kenneth Aloysius
-
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
 (at your option) any later version.
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
@@ -22,6 +19,11 @@ enum layers {
   _LAYER2,
   _LAYER3,
   _LAYER4
+};
+
+enum {
+  TD_LC = 0,
+  TD_RC
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -54,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ┌─────────┬─────────┬─────────┐ */
               KC_MS_U,  TO(_LAYER4),
 /* ├─────────┼─────────┼─────────┤ */
-    KC_MS_L,  KC_MS_D,  KC_MS_R
+    TD(TD_LC),  KC_MS_D,  TD(TD_RC)
 /* └─────────┴─────────┴─────────┘ */
   ),
 
@@ -102,3 +104,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     }
   return state;
 }
+
+// Tapdance definitions. Tap Dance mouse clicks
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [TD_LC] = ACTION_TAP_DANCE_DOUBLE(KC_MS_L, KC_MS_BTN1),
+  [TD_RC] = ACTION_TAP_DANCE_DOUBLE(KC_MS_R, KC_MS_BTN2)
+};
